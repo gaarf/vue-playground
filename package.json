@@ -1,0 +1,48 @@
+{
+  "name": "vue-playground",
+  "version": "1.0.0",
+  "description": "a graphql server and associated vue",
+  "main": "dist/index.js",
+  "author": "gaarf <onlineallthetime@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "eslint src/*",
+    "build": "tsc && webpack --mode production",
+    "dev": "tsc && yarn start",
+    "watch": "webpack --watch --mode development",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@google/maps": "^1.0.2",
+    "apollo-boost": "^0.4.4",
+    "apollo-datasource": "^0.6.3",
+    "apollo-server": "^2.9.7",
+    "apollo-server-express": "^2.9.7",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "load-google-maps-api": "^2.0.1",
+    "lodash": "^4.17.15",
+    "vue-apollo": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/google__maps": "^0.5.8",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "prettier": "^1.18.2",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.1",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  }
+}
