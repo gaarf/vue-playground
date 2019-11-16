@@ -6,7 +6,9 @@ import App from './components/App.vue';
 const el = document.createElement('div');
 document.body.appendChild(el);
 
-new Vue({ el, render: h => h(App) });
+document.addEventListener('DOMContentLoaded', () => {
+  new Vue({ el, render: h => h(App) });
+});
 
 // Vue.use(VueApollo);
 

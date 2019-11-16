@@ -2,13 +2,14 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "es5",
     "noImplicitThis": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "downlevelIteration": true
   },
   "lib": [
     "es2015"

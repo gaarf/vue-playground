@@ -4,10 +4,13 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/frontend/index.ts',
+  entry: {
+    main: './src/frontend/index.ts',
+    modal: './src/frontend/modal/modal.ts'
+  },
   output: {
     path: path.resolve(__dirname, './dist/frontend'),
-    filename: 'build.js',
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -32,7 +35,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader'],
+        use: ['vue-style-loader', 'css-loader', 'postcss-loader'],
       },
     ],
   },
