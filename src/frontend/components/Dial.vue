@@ -36,10 +36,10 @@ export default Vue.extend({
 <style scoped>
 ul {
   list-style-type: none;
-  --text-color: #333;
+  margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: calc(var(--clock-size) / 60);
-  color: var(--text-color);
+  color: #333;
 }
 li.marker {
   position: absolute;
