@@ -120,10 +120,8 @@ export class Modal {
       this.docEl.style.overflow = this.oldOverflow;
 
       // put the content back where it was
-      const content = this.contentEl.firstElementChild;
-      if(content) {
-        this.parentEl.appendChild(content);
-      }
+      const c = this.contentEl.firstElementChild;
+      c && this.parentEl.appendChild(c);
 
       // remove the eventlistener
       containerEl.removeEventListener('transitionend', cleanup);

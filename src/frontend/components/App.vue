@@ -18,7 +18,7 @@
           <p
             v-for="k in range"
             v-bind:key="`c-${k}`"
-          >Lorem ipsum dolor sit amet consectetur...</p>
+          >Lorem <textarea>ipsum</textarea> dolor sit amet consectetur...</p>
         </div>
       </div>
     </main>
