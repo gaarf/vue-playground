@@ -1,24 +1,35 @@
 <template>
   <div id="app">
     <main class="flex-center">
+      <h1>Modal demo and test page</h1>
+
       <p v-for="k in range" v-bind:key="`a-${k}`">
-        <input value="Scroll down a bit to find a button..." type="text" />
+        <input value="Scroll down a bit..." type="text" />
       </p>
 
-      <button v-on:click="openModal">click me to open a modal</button>
+      <p>
+        <button v-on:click="openModal">click me to open a modal</button>
+      </p>
 
-      <p
-        v-for="k in range"
-        v-bind:key="`b-${k}`"
-      >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, voluptates, possimus perspiciatis optio eaque itaque aut ad, vitae quisquam aspernatur voluptatem minima quibusdam explicabo dolores nihil. Quos porro esse accusantium.</p>
+      <div v-for="k in range" v-bind:key="`b-${k}`">
+        <h6>how to use?</h6>
+        include <a href="./modal.js">modal.js</a> and then...
+        <pre>
+const modal = new gaarfLib.Modal('some title');
+modal.show(someElement, { width: '80vw' });
+</pre>
+      </div>
 
-      <div ref="modal-content" hidden>
+      <div ref="modal-content" hidden aria-hidden>
         <div>
           <ClockComponent />
-          <p
-            v-for="k in range"
-            v-bind:key="`c-${k}`"
-          >Lorem <textarea>ipsum</textarea> dolor sit amet consectetur...</p>
+          <p v-for="k in range" v-bind:key="`c-${k}`">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum veniam saepe esse placeat in autem, ratione optio nihil inventore iusto, neque nisi eius quis odio voluptatem et aspernatur id rerum.
+            <input
+              value="test"
+              type="text"
+            />
+          </p>
         </div>
       </div>
     </main>
@@ -33,15 +44,18 @@ export default Vue.extend({
   components: { ClockComponent },
   data: () => ({
     range: [...Array(10).keys()],
-    // @ts-ignore
-    modal: new gaarfLib.Modal('Modal title here'),
+    modal: new globalThis.gaarfLib.Modal('Hello World'),
   }),
   methods: {
     openModal() {
       // @ts-ignore
       const content = this.$refs['modal-content'].firstElementChild;
-      this.modal.show(content, { width: '80vw', height: '50vh' });
+
+      this.modal.show(content, { width: '500px' });
     },
+  },
+  beforeDestroy() {
+    this.modal.destroy();
   },
 });
 </script>
@@ -64,5 +78,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+</style>
+
+<style scoped>
+button {
+  font-size: x-large;
 }
 </style>

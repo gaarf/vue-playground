@@ -9,6 +9,7 @@
     "outDir": "dist",
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "removeComments": true,
     "downlevelIteration": true
   },
   "lib": [

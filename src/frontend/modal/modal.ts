@@ -3,7 +3,7 @@ import createFocusTrap from 'focus-trap';
 
 export class Modal {
   static CSSCLASS = (s: string) => `gaarflib modal-${s}`;
-  private docEl = document.documentElement;
+  private bodyEl = document.body;
 
   // references to parts of our modal
   private containerEl: HTMLElement;
@@ -18,26 +18,33 @@ export class Modal {
   // it's a trap!
   private focusTrap: ReturnType<typeof createFocusTrap>;
 
+
   get visible() {
     return !this.containerEl.hasAttribute('hidden');
   }
+
+
 
   constructor(title: string) {
     const { CSSCLASS } = Modal;
 
     // create a container
     const ctnr = document.createElement('div');
-    ctnr.setAttribute('hidden', 'hidden');
+    ctnr.setAttribute('hidden', 'true');
+    ctnr.setAttribute('aria-hidden', 'true');
     ctnr.className = CSSCLASS('container');
 
     const cc = CSSCLASS('content');
     const cd = CSSCLASS('dialog');
 
+    // poor man's unique id for the title ...there could be more than one
+    const titleId = `t-${Date.now()}-${Math.floor(Math.random() * 1e3)}`;
+
     ctnr.innerHTML = `
       <div class="${CSSCLASS('bg')}"></div>
-      <div class="${cd}" aria-role="dialog">
+      <div class="${cd}" aria-role="dialog" aria-labelledby="${titleId}">
         <div class="${CSSCLASS('main')}">
-          <h3>${title}</h3>
+          <h3 id="${titleId}">${title}</h3>
           <div class="${cc}"></div>
           <div class="${CSSCLASS('footer')}">
             <button>Close</button>
@@ -46,31 +53,37 @@ export class Modal {
       </div>
 `;
 
-    this.docEl.appendChild(ctnr);
+    this.bodyEl.appendChild(ctnr);
     this.containerEl = ctnr;
     this.contentEl = ctnr.getElementsByClassName(cc)[0] as HTMLElement;
 
     const dialog = ctnr.getElementsByClassName(cd)[0];
     const button = ctnr.getElementsByTagName('button')[0];
 
-    // click the button, or the dialog background = dismiss
+    // click the button, or the dialog background = dismiss modal
     ctnr.addEventListener('click', (event) => {
       if ([button, dialog].indexOf(event.target as HTMLElement) >= 0) {
         this.hide();
       }
     });
 
-    // admiral ackbar handles the escape key
+    // admiral ackbar handles focus and the escape key
     this.focusTrap = createFocusTrap(ctnr, {
       onDeactivate: () => this.hide()
     });
   }
 
 
+
+
+
   public destroy() {
     this.hide();
-    this.docEl.removeChild(this.containerEl);
+    this.bodyEl.removeChild(this.containerEl);
   }
+
+
+
 
   public show(content: HTMLElement, styles: Partial<CSSStyleDeclaration> = {}) {
     if (this.visible) {
@@ -78,30 +91,36 @@ export class Modal {
     }
 
     // prevent scroll
-    this.oldOverflow = this.docEl.style.overflow;
-    this.docEl.style.overflow = 'hidden';
+    this.oldOverflow = this.bodyEl.style.overflow;
+    this.bodyEl.style.overflow = 'hidden';
+
+    const { contentEl, containerEl } = this;
 
     // apply styles to the content
     for (const key in styles) {
-      this.contentEl.style[key] = styles[key];
+      contentEl.style[key] = styles[key];
     }
 
     // drop the content into the modal
     this.parentEl = content.parentElement;
-    this.contentEl.appendChild(content);
+    contentEl.appendChild(content);
 
     // show the container
-    this.containerEl.removeAttribute('hidden');
-    this.contentEl.scrollTop = 0;
+    containerEl.removeAttribute('hidden');
+    containerEl.removeAttribute('aria-hidden');
 
-    setTimeout(() => {
-      this.focusTrap.activate();
-
-      // add a CSS class for animation
-      this.containerEl.classList.add('in');
-    }, 1);
-
+    this.focusTrap.activate({
+      onActivate() {
+        // add a CSS class for animation
+        containerEl.classList.add('in');
+        contentEl.scrollTop = 0;
+      }
+    });
   }
+
+
+
+
 
   public hide() {
     if (!this.visible) {
@@ -114,10 +133,11 @@ export class Modal {
 
     const cleanup = () => {
       // hide the container
-      containerEl.setAttribute('hidden', 'hidden');
+      containerEl.setAttribute('hidden', 'true');
+      containerEl.setAttribute('aria-hidden', 'true');
 
       // restore scroll
-      this.docEl.style.overflow = this.oldOverflow;
+      this.bodyEl.style.overflow = this.oldOverflow;
 
       // put the content back where it was
       const c = this.contentEl.firstElementChild;
