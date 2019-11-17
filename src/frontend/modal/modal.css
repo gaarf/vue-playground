@@ -2,65 +2,59 @@
   display: none;
 }
 
-.gaarflib.modal-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  overflow: hidden;
-}
-
-.gaarflib.modal-bg {
+.gaarf.modal-container,
+.gaarf.modal-bg,
+.gaarf.modal-dialog {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
+}
+
+.gaarf.modal-container {
+  position: fixed;
+  overflow: hidden;
+}
+
+.gaarf.modal-bg {
   background-color: black;
   transition: opacity 4s ease-in-out;
   opacity: 1;
 }
-.modal-container.in .gaarflib.modal-bg {
+.modal-container.in .gaarf.modal-bg {
   opacity: .6;
 }
 
-.gaarflib.modal-dialog {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+.gaarf.modal-dialog {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.gaarflib.modal-main {
+.gaarf.modal-main {
   background-color: white;
   border-radius: 10px;
   transition: transform .4s ease-in-out;
   transform: scale(0);
 }
-.modal-container.in .gaarflib.modal-main {
+.modal-container.in .gaarf.modal-main {
   transform: scale(1);
 }
 
-
-
-.gaarflib.modal-main > h3 {
+.gaarf.modal-main > h3 {
   text-align: center;
   font-family: Geneva, Tahoma, sans-serif;
 }
 
-.gaarflib.modal-content {
+.gaarf.modal-content {
   max-height: 60vh;
   max-width: 80vh;
   overflow: auto;
   padding: 1em;
 }
 
-.gaarflib.modal-footer {
+.gaarf.modal-footer {
   text-align: center;
   padding: 1em;
 }

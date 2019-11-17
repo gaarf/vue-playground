@@ -2,7 +2,7 @@ import './modal.css';
 import createFocusTrap from 'focus-trap';
 
 export class Modal {
-  static CSSCLASS = (s: string) => `gaarflib modal-${s}`;
+  static CSSCLASS = (s: string) => `gaarf modal-${s}`;
   private bodyEl = document.body;
 
   // references to parts of our modal
@@ -50,8 +50,7 @@ export class Modal {
             <button>Close</button>
           </div>
         </div>
-      </div>
-`;
+      </div>`;
 
     this.bodyEl.appendChild(ctnr);
     this.containerEl = ctnr;
