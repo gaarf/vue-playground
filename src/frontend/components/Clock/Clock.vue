@@ -40,7 +40,7 @@ export default Vue.extend({
 
 <style scoped>
 #clock {
-  --clock-size: 300px;
+  --clock-size: 400px;
   width: var(--clock-size);
   height: var(--clock-size);
   border: 1px solid #ccc;

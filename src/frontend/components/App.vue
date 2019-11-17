@@ -1,44 +1,52 @@
 <template>
   <div id="app">
     <main class="flex-center">
-
       <p v-for="k in range" v-bind:key="`a-${k}`">
         <input value="Scroll down a bit to find a button..." type="text" />
       </p>
 
-      <button v-on:click="openModal">click moi to open le modal</button>
+      <button v-on:click="openModal">click me to open a modal</button>
 
-      <p v-for="k in range" v-bind:key="`b-${k}`">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, voluptates, possimus perspiciatis optio eaque itaque aut ad, vitae quisquam aspernatur voluptatem minima quibusdam explicabo dolores nihil. Quos porro esse accusantium.
-      </p>
+      <p
+        v-for="k in range"
+        v-bind:key="`b-${k}`"
+      >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, voluptates, possimus perspiciatis optio eaque itaque aut ad, vitae quisquam aspernatur voluptatem minima quibusdam explicabo dolores nihil. Quos porro esse accusantium.</p>
 
-      <div id="modal-content" hidden>
-        <ClockComponent />
+      <div ref="modal-content" hidden>
+        <div>
+          <ClockComponent />
+          <p
+            v-for="k in range"
+            v-bind:key="`c-${k}`"
+          >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, voluptates, possimus perspiciatis optio eaque itaque aut ad, vitae quisquam aspernatur voluptatem minima quibusdam explicabo dolores nihil. Quos porro esse accusantium.</p>
+        </div>
       </div>
     </main>
   </div>
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
 import ClockComponent from './Clock/Clock.vue';
-import { Modal } from '../modal/modal';
 
-export default {
-  components: {
-    ClockComponent,
-  },
+export default Vue.extend({
+  components: { ClockComponent },
   data: () => ({
-      range: [...Array(10).keys()],
-      modal: new Modal()
-    }),
+    range: [...Array(10).keys()],
+    // @ts-ignore
+    modal: new gaarfLib.Modal('Modal title here'),
+  }),
   methods: {
-    openModal: function () {
-      this.modal.show(
-        document.getElementById('modal-content')
-      );
-    }
-  }
-};
+    openModal() {
+      // @ts-ignore
+      const content = this.$refs['modal-content'].firstElementChild;
+      if (!content) {
+        return console.log('no content!', content);
+      }
+      this.modal.show(content, { maxWidth: '80vw', maxHeight: '50vh' });
+    },
+  },
+});
 </script>
 
 <style>
@@ -60,5 +68,4 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 </style>

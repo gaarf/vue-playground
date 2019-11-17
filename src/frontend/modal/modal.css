@@ -1,3 +1,65 @@
-body {
-  background-color: orange;
+[hidden] {
+  display: none;
+}
+
+.gaarflib.modal-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.gaarflib.modal-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  transition: opacity 4s ease-in-out;
+  opacity: 1;
+}
+.modal-container.in .gaarflib.modal-bg {
+  opacity: .6;
+}
+
+.gaarflib.modal-dialog {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.gaarflib.modal-main {
+  background-color: white;
+  border-radius: 1em;
+  transition: transform .4s ease-in-out;
+  transform: scale(0);
+}
+.modal-container.in .gaarflib.modal-main {
+  transform: scale(1);
+}
+
+
+
+.gaarflib.modal-main > h3 {
+  text-align: center;
+  font-family: Geneva, Tahoma, sans-serif;
+}
+
+.gaarflib.modal-content {
+  overflow: auto;
+  padding: 1em;
+}
+
+.gaarflib.modal-footer {
+  text-align: center;
+  padding: 1em;
 }
