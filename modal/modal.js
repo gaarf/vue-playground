@@ -28,7 +28,7 @@ var Modal = (function () {
         var cc = CSSCLASS('content');
         var cd = CSSCLASS('dialog');
         var titleId = "t-" + Date.now() + "-" + Math.floor(Math.random() * 1e3);
-        ctnr.innerHTML = "\n      <div class=\"" + CSSCLASS('bg') + "\"></div>\n      <div class=\"" + cd + "\" aria-role=\"dialog\" aria-labelledby=\"" + titleId + "\">\n        <div class=\"" + CSSCLASS('main') + "\">\n          <h3 id=\"" + titleId + "\">" + title + "</h3>\n          <div class=\"" + cc + "\"></div>\n          <div class=\"" + CSSCLASS('footer') + "\">\n            <button>Close</button>\n          </div>\n        </div>\n      </div>\n";
+        ctnr.innerHTML = "\n      <div class=\"" + CSSCLASS('bg') + "\"></div>\n      <div class=\"" + cd + "\" aria-role=\"dialog\" aria-labelledby=\"" + titleId + "\">\n        <div class=\"" + CSSCLASS('main') + "\">\n          <h3 id=\"" + titleId + "\">" + title + "</h3>\n          <div class=\"" + cc + "\"></div>\n          <div class=\"" + CSSCLASS('footer') + "\">\n            <button>Close</button>\n          </div>\n        </div>\n      </div>";
         this.bodyEl.appendChild(ctnr);
         this.containerEl = ctnr;
         this.contentEl = ctnr.getElementsByClassName(cc)[0];
@@ -99,7 +99,7 @@ var Modal = (function () {
         }
         containerEl.classList.remove('in');
     };
-    Modal.CSSCLASS = function (s) { return "gaarflib modal-" + s; };
+    Modal.CSSCLASS = function (s) { return "gaarf modal-" + s; };
     return Modal;
 }());
 exports.Modal = Modal;
