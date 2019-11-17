@@ -1,4 +1,5 @@
 import './modal.css';
+import createFocusTrap from 'focus-trap';
 
 export class Modal {
   static CSSCLASS = (s: string) => `gaarflib modal-${s}`;
@@ -13,6 +14,9 @@ export class Modal {
 
   // the parent of the element passed to "show"
   private parentEl: HTMLElement;
+
+  // it's a trap!
+  private focusTrap: ReturnType<typeof createFocusTrap>;
 
   get visible() {
     return !this.containerEl.hasAttribute('hidden');
@@ -50,19 +54,18 @@ export class Modal {
     const button = ctnr.getElementsByTagName('button')[0];
 
     // click the button, or the dialog background = dismiss
-    ctnr.addEventListener('click', ({ target }) => {
-      if ([button, dialog].indexOf(target as HTMLElement) >= 0) {
+    ctnr.addEventListener('click', (event) => {
+      if ([button, dialog].indexOf(event.target as HTMLElement) >= 0) {
         this.hide();
       }
     });
+
+    // admiral ackbar handles the escape key
+    this.focusTrap = createFocusTrap(ctnr, {
+      onDeactivate: () => this.hide()
+    });
   }
 
-  private keydownHandler = ({ keyCode }: KeyboardEvent) => {
-    if (keyCode === 27) {
-      // ESCAPE
-      this.hide();
-    }
-  };
 
   public destroy() {
     this.hide();
@@ -73,9 +76,6 @@ export class Modal {
     if (this.visible) {
       return;
     }
-
-    // bind keyboard handler
-    this.docEl.addEventListener('keydown', this.keydownHandler);
 
     // prevent scroll
     this.oldOverflow = this.docEl.style.overflow;
@@ -94,10 +94,13 @@ export class Modal {
     this.containerEl.removeAttribute('hidden');
     this.contentEl.scrollTop = 0;
 
-    // add a CSS class for animation
     setTimeout(() => {
+      this.focusTrap.activate();
+
+      // add a CSS class for animation
       this.containerEl.classList.add('in');
     }, 1);
+
   }
 
   public hide() {
@@ -105,8 +108,7 @@ export class Modal {
       return;
     }
 
-    // unbind keyboard handler
-    this.docEl.removeEventListener('keydown', this.keydownHandler);
+    this.focusTrap.deactivate({ onDeactivate: undefined });
 
     const { containerEl } = this;
 
@@ -118,7 +120,10 @@ export class Modal {
       this.docEl.style.overflow = this.oldOverflow;
 
       // put the content back where it was
-      this.parentEl.appendChild(this.contentEl.firstElementChild);
+      const content = this.contentEl.firstElementChild;
+      if(content) {
+        this.parentEl.appendChild(content);
+      }
 
       // remove the eventlistener
       containerEl.removeEventListener('transitionend', cleanup);

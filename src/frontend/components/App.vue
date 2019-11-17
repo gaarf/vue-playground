@@ -18,7 +18,7 @@
           <p
             v-for="k in range"
             v-bind:key="`c-${k}`"
-          >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, voluptates, possimus perspiciatis optio eaque itaque aut ad, vitae quisquam aspernatur voluptatem minima quibusdam explicabo dolores nihil. Quos porro esse accusantium.</p>
+          >Lorem ipsum dolor sit amet consectetur...</p>
         </div>
       </div>
     </main>
@@ -40,10 +40,7 @@ export default Vue.extend({
     openModal() {
       // @ts-ignore
       const content = this.$refs['modal-content'].firstElementChild;
-      if (!content) {
-        return console.log('no content!', content);
-      }
-      this.modal.show(content, { maxWidth: '80vw', maxHeight: '50vh' });
+      this.modal.show(content, { width: '80vw', height: '50vh' });
     },
   },
 });
